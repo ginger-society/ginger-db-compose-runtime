@@ -1,9 +1,7 @@
 version: '3'
 services:
   runner-image-runtime:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: gingersociety/db-compose-runtime
     ports:
       - 9001:8000
     environment:
