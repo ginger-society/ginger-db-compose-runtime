@@ -16,7 +16,7 @@ pub mod schema {
 {% for key, value in schemas.items %}
     table! {
         {{value.table_name}} ({% if value.primaryKey %}{{value.primaryKey}}{% endif %}) {
-            {% for fieldname, fieldconfig in  value.fields.items %}{% if fieldconfig.relation_decorator != 'OneToMany' and fieldconfig.pyType != 'ManyToManyField' %}{% if fieldconfig.max_length %}#[max_length = {{fieldconfig.max_length}}]
+            {% for fieldname, fieldconfig in value.fields.items %}{% if fieldconfig.relation_decorator != 'OneToMany' and fieldconfig.pyType != 'ManyToManyField' %}{% if fieldconfig.max_length %}#[max_length = {{fieldconfig.max_length}}]
             {% endif %}{% if fieldconfig.alias %}{{fieldconfig.original_column_name}}{% else %}{{fieldname}}{% endif %} ->{% if fieldconfig.null%}Nullable<{% endif %}{{fieldconfig.type}}{% if fieldconfig.null%}>{% endif %},
             {% endif %}{% endfor %}
         }

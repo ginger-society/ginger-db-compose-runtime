@@ -1,4 +1,3 @@
-[project]
 description = "Provide schema generation service locally"
 name = "schema-gen-service"
 organization = "ginger-society"
