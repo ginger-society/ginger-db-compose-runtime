@@ -20,6 +20,9 @@ jobs:
     - name: Authenticate with ginger-auth
       id: ginger-auth
       run: ginger-auth token-login ${{ secrets.GINGER_TOKEN }}
+    
+    - name: Refresh all internal package versions
+      run: ginger-connector refresh
 
     - name: Update status to running
       run: ginger-connector update-pipeline stage running
