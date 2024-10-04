@@ -1,6 +1,7 @@
 name: Build, Push Docker Image for runner and migrator
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
