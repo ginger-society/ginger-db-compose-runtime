@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import os
+
 VERSION = "0.10.0-nightly.0"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -15,7 +16,7 @@ SECRET_KEY = "ginger-insecure-u0j2maaxfoo8t1_l(l*asol9gw@(we8j=_lkn9m$dla55^(74@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [os.getenv("HOST", "localhost"), "127.0.0.1"]
 
 # Application definition
 
@@ -66,11 +67,11 @@ WSGI_APPLICATION = "server.wsgi.application"
 DATABASES = {  # pragma: no cover
     "default": {
         "ENGINE": "ginger.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv('DB_NAME', 'IAM-db'),
-        "USER": os.getenv('DB_USERNAME', 'postgres'),
-        "PASSWORD": os.getenv('DB_PASSWORD', 'postgres'),
-        "HOST": os.getenv('DB_HOST', '127.0.0.1'),
-        "PORT": os.getenv('DB_PORT', '5432'),
+        "NAME": os.getenv("DB_NAME", "IAM-db"),
+        "USER": os.getenv("DB_USERNAME", "postgres"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "postgres"),
+        "HOST": os.getenv("DB_HOST", "127.0.0.1"),
+        "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
 
