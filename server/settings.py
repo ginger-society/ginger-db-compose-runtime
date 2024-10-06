@@ -13,6 +13,7 @@ GEOS_LIBRARY_PATH = "/opt/homebrew/opt/geos/lib/libgeos_c.dylib"
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "ginger-insecure-u0j2maaxfoo8t1_l(l*asol9gw@(we8j=_lkn9m$dla55^(74@"
 
+JWT_SECRET_KEY = os.getenv("JWT_SECRET", "postgres")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -37,6 +38,7 @@ MIDDLEWARE = [
     "ginger.middleware.csrf.CsrfViewMiddleware",
     "ginger.contrib.messages.middleware.MessageMiddleware",
     "ginger.middleware.clickjacking.XFrameOptionsMiddleware",
+    "server.middlewares.JWTAuthMiddleware",
 ]
 
 ROOT_URLCONF = "server.urls"

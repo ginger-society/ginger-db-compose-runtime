@@ -20,6 +20,7 @@ from ginger.urls import include, path
 from src.views import *
 from ginger.drf_yasg.views import get_schema_view
 from ginger.conf import settings
+from server.views import handle_auth
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -34,10 +35,14 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path("swagger/", schema_view.with_ui("swagger",
-         cache_timeout=0), name="schema-swagger-ui"),
-    path("swagger<format>/", schema_view.without_ui(cache_timeout=0),
-         name="schema-json"),
+    path(
+        "swagger/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+    path(
+        "swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"
+    ),
     path("admin/", admin.site.urls),
     path("models/", get_model_schema),
     path("py-sqlalchemy-models/", get_sqlalchemy_model_schema),
@@ -45,5 +50,10 @@ urlpatterns = [
     path("py-ginger-dj-models/", get_ginger_dj_model_schema),
     path("render_models", render_models),
     path("get-all-models", get_all_defined_models),
+    path(
+        "handle-auth/<str:access_token>/<str:refresh_token>",
+        handle_auth,
+        name="handle_auth",
+    ),
     path("", include("ginger.prometheus.urls")),
 ]
