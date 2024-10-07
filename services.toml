@@ -1,6 +1,7 @@
 dir = "."
 lang = "Python"
 organization_id = "ginger-society"
+portal_refs_file = "src/references.py"
 service_type = "RPCEndpoint"
 spec_url = "/swagger/?format=openapi"
 

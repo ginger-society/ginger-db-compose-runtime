@@ -1,6 +1,7 @@
 import jwt
 from ginger.http import HttpResponseRedirect
 from ginger.conf import settings
+from src.references import GINGER_SOCIETY_IAM_FRONTEND_USERS
 
 
 class JWTAuthMiddleware:
@@ -8,7 +9,9 @@ class JWTAuthMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        redirect_url = "http://localhost:3001/#" + settings.APP_ID + "/login"
+        redirect_url = (
+            GINGER_SOCIETY_IAM_FRONTEND_USERS + "/#" + settings.APP_ID + "/login"
+        )
 
         access_token = request.COOKIES.get("access_token")
         refresh_token = request.COOKIES.get("refresh_token")
