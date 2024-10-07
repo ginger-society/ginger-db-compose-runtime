@@ -27,12 +27,6 @@ jobs:
     - name: Update status to running
       run: ginger-connector update-pipeline stage running
 
-    - name: Connect to stage
-      run: ginger-connector connect stage
-
-    - name: Generate references to stage
-      run: ginger-connector refer stage
-
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
