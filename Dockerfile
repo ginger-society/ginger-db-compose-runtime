@@ -15,6 +15,12 @@ RUN npm install @openapitools/openapi-generator-cli -g
 
 RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ginger-society/infra-as-code-repo/main/rust-helpers/install-pipeline-clis.sh)"
 
+ARG GINGER_TOKEN
+ENV GINGER_TOKEN=$GINGER_TOKEN
+RUN ginger-auth token-login $GINGER_TOKEN
+
+RUN ginger-connector refer stage
+RUN ginger-connector connect stage
 
 ENV env prod
 WORKDIR /app
