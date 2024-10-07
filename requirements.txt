@@ -10,4 +10,4 @@ packaging
 setuptools
 pydantic
 certifi
-dateutil
+python-dateutil
