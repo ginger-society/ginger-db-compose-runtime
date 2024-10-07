@@ -7,7 +7,7 @@ RUN apt update && apt install -y curl nano make gcc wget build-essential procps
 
 # Manually download and install libssl1.1 for compatibility
 RUN apt-get install -y --no-install-recommends wget \
-    && wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb \
+    && wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb \
     && dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb \
     && rm libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
 
