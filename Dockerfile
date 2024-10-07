@@ -20,12 +20,15 @@ ARG GINGER_TOKEN
 ENV GINGER_TOKEN=$GINGER_TOKEN
 RUN ginger-auth token-login $GINGER_TOKEN
 
-RUN ginger-connector refer stage
-RUN ginger-connector connect stage
+
 
 ENV env prod
 WORKDIR /app
 COPY . /app
+
+RUN ginger-connector refer stage
+RUN ginger-connector connect stage
+
 EXPOSE 80
 RUN pip install -r requirements.txt
 RUN chmod +x run.sh
