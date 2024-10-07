@@ -2,6 +2,8 @@ FROM python:3
 ENV PYTHONUNBUFFERED 1
 RUN apt update
 RUN apt install postgresql-client libssl-dev libpq-dev pkg-config curl -y
+RUN apt update && apt install -y curl nano make gcc wget build-essential procps
+
 
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
