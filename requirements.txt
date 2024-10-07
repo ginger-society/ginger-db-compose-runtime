@@ -12,3 +12,4 @@ pydantic
 certifi
 python-dateutil
 urllib3
+PyJWT
