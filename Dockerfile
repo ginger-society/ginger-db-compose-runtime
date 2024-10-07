@@ -1,15 +1,8 @@
-FROM python:3
-ENV PYTHONUNBUFFERED 1
+FROM debian:bullseye-slim
 RUN apt update
 RUN apt install postgresql-client libssl-dev libpq-dev pkg-config curl -y
-RUN apt update && apt install -y curl nano make gcc wget build-essential procps
+RUN apt install -y curl nano make gcc wget build-essential procps
 
-
-# Manually download and install libssl1.1 for compatibility
-RUN apt-get install -y --no-install-recommends wget \
-    && wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb \
-    && dpkg -i libssl1.1_1.1.0g-2ubuntu4_amd64.deb \
-    && rm libssl1.1_1.1.0g-2ubuntu4_amd64.deb
 
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
