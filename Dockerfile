@@ -3,8 +3,6 @@ RUN apt update
 RUN apt install postgresql-client python3.11 python3-pip libssl-dev libpq-dev pkg-config curl -y
 RUN apt install -y curl nano make gcc wget build-essential procps
 
-RUN pip install pip --upgrade
-
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
 RUN apt install -y nodejs
