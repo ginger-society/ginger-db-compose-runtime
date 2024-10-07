@@ -20,7 +20,7 @@ from ginger.urls import include, path
 from src.views import *
 from ginger.drf_yasg.views import get_schema_view
 from ginger.conf import settings
-from server.views import clear_session, handle_auth, refresh_token
+from server.views import clear_session, get_additional_info, handle_auth, refresh_token
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -62,4 +62,5 @@ urlpatterns = [
     ),
     path("", include("ginger.prometheus.urls")),
     path("clear-session/", clear_session, name="logout"),
+    path("additional-details", get_additional_info),
 ]

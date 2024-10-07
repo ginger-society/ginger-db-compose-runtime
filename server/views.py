@@ -2,7 +2,7 @@ from IAMService_client.IAMService.api_client import ApiClient
 from ginger.http import HttpResponseRedirect
 from ginger.shortcuts import redirect
 import certifi
-from ginger.http import HttpResponse
+from ginger.http import HttpResponse, JsonResponse
 from ginger.shortcuts import redirect
 
 
@@ -70,3 +70,14 @@ def clear_session(request):
     # Update the 'access_token' cookie with the new token
     http_response.set_cookie("refresh_token", "")
     return http_response
+
+
+def get_additional_info(request):
+    # Access the decoded JWT claims from the request
+    decoded_jwt = request.decoded_jwt
+
+    # Extract the "sub" claim (usually used as the user's email or unique ID)
+    email = decoded_jwt.get("sub", "Unknown")
+
+    # Return the email in the JSON response
+    return JsonResponse({"email": email}, status=200)

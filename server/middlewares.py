@@ -27,9 +27,7 @@ class JWTAuthMiddleware:
                 access_token, settings.JWT_SECRET_KEY, algorithms=["HS256"]
             )
             print("Decoded Claims:", decoded_token)
-            print(
-                jwt.decode(refresh_token, settings.JWT_SECRET_KEY, algorithms=["HS256"])
-            )
+            request.decoded_jwt = decoded_token
 
         except Exception as e:
             print(e)
