@@ -1,14 +1,13 @@
 from IAMService_client.IAMService.api_client import ApiClient
+from IAMService_client.IAMService.config_utils import get_configuration
 from ginger.http import HttpResponseRedirect
 from ginger.shortcuts import redirect
-import certifi
 from ginger.http import HttpResponse, JsonResponse
 from ginger.shortcuts import redirect
 
 
 from IAMService_client.IAMService import (
     RefreshTokenRequest,
-    Configuration,
     DefaultApi,
 )
 
@@ -31,18 +30,7 @@ def refresh_token(request):
     access_token = request.COOKIES.get("access_token")
     refresh_token_request = RefreshTokenRequest(refresh_token=refresh_token)
 
-    conf = Configuration(
-        host="https://api-staging.gingersociety.org/iam",
-        ssl_ca_cert=certifi.where(),
-        api_key={
-            "BearerAuth": access_token
-        },  # Set the access token with 'BearerAuth' identifier
-        api_key_prefix={"BearerAuth": "Bearer"},
-    )
-
-    print(conf)
-
-    api_client = ApiClient(configuration=conf)
+    api_client = ApiClient(configuration=get_configuration(access_token))
 
     api_instance = DefaultApi(api_client)
 

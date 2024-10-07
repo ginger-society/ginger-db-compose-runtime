@@ -14,6 +14,9 @@ GEOS_LIBRARY_PATH = "/opt/homebrew/opt/geos/lib/libgeos_c.dylib"
 SECRET_KEY = "ginger-insecure-u0j2maaxfoo8t1_l(l*asol9gw@(we8j=_lkn9m$dla55^(74@"
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET", "1234")
+
+APP_ID = os.getenv("APP_ID", "dev-portal-staging")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
