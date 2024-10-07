@@ -1,10 +1,18 @@
+dir = "."
 lang = "Python"
 organization_id = "ginger-society"
 service_type = "RPCEndpoint"
 spec_url = "/swagger/?format=openapi"
 
+[services."@ginger-society/IAMService"]
+dev = "http://localhost:8080/iam"
+stage = "https://api-staging.gingersociety.org/iam"
+stage_k8 = "http://iam-service-api-service/iam"
+
+[portals_refs."@ginger-society/iam-frontend-users"]
+dev = "http://localhost:3001"
+stage = "https://iam-staging.gingersociety.org"
+
 [urls]
 dev = "http://localhost:9002"
 stage = "http://localhost:9002"
-
-[services]

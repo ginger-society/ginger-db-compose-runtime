@@ -9,3 +9,5 @@ pytz==2024.1
 inflection==0.5.1
 packaging
 setuptools
+pydentic
+certifi

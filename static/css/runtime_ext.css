@@ -1,0 +1,48 @@
+.gingerdb-container {
+  display: inline-flex;
+  align-items: center;
+  /* Vertically centers text and image */
+}
+
+.gingerdb-container img {
+  margin-left: 5px;
+  /* Ensure spacing between text and image */
+}
+
+.logout-button {
+  float: right;
+  background-color: black;
+  padding: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
+  color: white;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #333;
+  /* Darken the button on hover */
+}
+
+.theme-toggle-button {
+  float: right;
+  margin-left: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.welcome-message {
+  font-size: 14px; /* Adjust font size to match the rest of the breadcrumbs */
+  margin-right: 15px; /* Add space between the welcome message and the logout button */
+  display: inline-block; /* Ensures proper alignment with other elements */
+  vertical-align: middle; /* Vertically align with other items in the breadcrumbs */
+  float: right;
+}

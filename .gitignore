@@ -1,3 +1,5 @@
 .DS_Store
 *.pyc
 pgsql
+IAMService_client
+.ginger.tmp

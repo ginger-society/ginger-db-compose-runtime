@@ -13,7 +13,7 @@ GEOS_LIBRARY_PATH = "/opt/homebrew/opt/geos/lib/libgeos_c.dylib"
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "ginger-insecure-u0j2maaxfoo8t1_l(l*asol9gw@(we8j=_lkn9m$dla55^(74@"
 
-JWT_SECRET_KEY = os.getenv("JWT_SECRET", "postgres")
+JWT_SECRET_KEY = os.getenv("JWT_SECRET", "1234")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -46,6 +46,7 @@ ROOT_URLCONF = "server.urls"
 TEMPLATES_DIR = [
     os.path.join(BASE_DIR, "src", "orm_templates", "ts"),
     os.path.join(BASE_DIR, "src", "orm_templates"),
+    os.path.join(BASE_DIR, "src", "templates"),
 ]
 
 TEMPLATES = [
@@ -88,3 +89,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "ginger.db.models.BigAutoField"
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # BASE_DIR is your project root
+]
