@@ -2,6 +2,12 @@ lang = "Python"
 package_type = "executable"
 
 [[links]]
+icon = "FaLink"
+internal = true
+label = "Open Test Studio"
+link = "https://db-compose-runtime-test-env-675766508318.asia-south1.run.app"
+
+[[links]]
 icon = "FaCodeBranch"
 internal = true
 label = "Pull Requests"

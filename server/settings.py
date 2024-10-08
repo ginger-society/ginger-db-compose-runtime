@@ -23,6 +23,7 @@ DEBUG = True
 ALLOWED_HOSTS = [os.getenv("HOST", "localhost"), "127.0.0.1"]
 
 CSRF_TRUSTED_ORIGINS = ["https://" + os.getenv("HOST", "localhost")]
+CORS_ALLOWED_ORIGINS = ["https://" + os.getenv("HOST", "localhost")]
 
 # Application definition
 
