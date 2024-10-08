@@ -72,6 +72,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "server.wsgi.application"
 
 if not os.getenv("DB_NAME"):
+    print("Using SQLite3")
     DATABASES = {
         "default": {
             "ENGINE": "ginger.db.backends.sqlite3",
@@ -79,6 +80,7 @@ if not os.getenv("DB_NAME"):
         }
     }
 else:
+    print("Using PostgreSQL")
     DATABASES = {  # pragma: no cover
         "default": {
             "ENGINE": "ginger.db.backends.postgresql_psycopg2",
