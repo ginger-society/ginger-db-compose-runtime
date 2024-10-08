@@ -41,6 +41,32 @@ jobs:
     - name: Push Docker image for migrator
       run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/db-compose-migrator:latest
 
+    # Step to authenticate with GCP
+    - name: Authenticate with GCP
+      uses: google-github-actions/setup-gcloud@v2
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}  # Your GCP Project ID
+        version: 'latest'  # Specify the version to use
+
+    - name: Set up Google Cloud Application Credentials
+      run: echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | base64 --decode > ${{ github.workspace }}/gcloud-key.json
+
+    - name: Authenticate with Google Cloud
+      run: |
+        gcloud auth activate-service-account --key-file=${{ github.workspace }}/gcloud-key.json
+
+    - name: Update Cloud Run Image - db-compose-runtime-test-env
+      run: |
+        echo "Updating Cloud Run service with the new image"
+        gcloud run services update db-compose-runtime-test-env \
+          --image gingersociety/db-compose-migrator:latest \
+          --platform managed \
+          --region asia-south1 \
+          --quiet  # Add --quiet to skip confirmation prompts
+
+    - name: Publish stage using ginger-connector
+      run: ginger-connector publish stage
+
     - name: Update status to passing
       run: ginger-connector update-pipeline stage passing
 

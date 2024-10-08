@@ -15,12 +15,14 @@ SECRET_KEY = "ginger-insecure-u0j2maaxfoo8t1_l(l*asol9gw@(we8j=_lkn9m$dla55^(74@
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET", "1234")
 
-APP_ID = os.getenv("APP_ID", "metadata-db-runtime")
+APP_ID = os.getenv("APP_ID", "db-compose-test-env")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [os.getenv("HOST", "localhost"), "127.0.0.1"]
+
+CSRF_TRUSTED_ORIGINS = ["https://" + os.getenv("HOST", "localhost")]
 
 # Application definition
 

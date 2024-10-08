@@ -15,5 +15,5 @@ dev = "http://localhost:3001"
 stage = "https://iam-staging.gingersociety.org"
 
 [urls]
-dev = "http://localhost:9002"
-stage = "http://localhost:3010"
+dev = "http://localhost:3013"
+stage = "https://db-compose-runtime-test-env-675766508318.asia-south1.run.app"
