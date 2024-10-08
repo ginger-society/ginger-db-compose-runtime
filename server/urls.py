@@ -22,6 +22,7 @@ from ginger.drf_yasg.views import get_schema_view
 from ginger.conf import settings
 from server.views import clear_session, get_additional_info, handle_auth, refresh_token
 
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Snippets API",

@@ -15,7 +15,7 @@ SECRET_KEY = "ginger-insecure-u0j2maaxfoo8t1_l(l*asol9gw@(we8j=_lkn9m$dla55^(74@
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET", "1234")
 
-APP_ID = os.getenv("APP_ID", "dev-portal-staging")
+APP_ID = os.getenv("APP_ID", "metadata-db-runtime")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -96,3 +96,15 @@ DEFAULT_AUTO_FIELD = "ginger.db.models.BigAutoField"
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # BASE_DIR is your project root
 ]
+
+
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "BearerAuth": {"type": "apiKey", "name": "Authorization", "in": "header"},
+        "BearerAPIAuth": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "X-API-Authorization",
+        },
+    },
+}

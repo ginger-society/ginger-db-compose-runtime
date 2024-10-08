@@ -908,7 +908,7 @@ class ModelsReponseSerializer(serializers.Serializer):
     responses={
         200: openapi.Response("get_all_models", ModelsReponseSerializer(many=True))
     },
-    security=[{"Bearer": []}],
+    security=[{"BearerAPIAuth": []}],
 )
 @api_view(["GET"])
 def get_all_defined_models(request):
@@ -953,7 +953,7 @@ class RenderedModelsReponseSerializer(serializers.Serializer):
             "get_rendered_models", RenderedModelsReponseSerializer(many=True)
         )
     },
-    security=[{"Bearer": []}],
+    security=[{"BearerAPIAuth": []}],
 )
 @api_view(["GET"])
 def render_models(request):
