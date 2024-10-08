@@ -59,7 +59,7 @@ jobs:
       run: |
         echo "Updating Cloud Run service with the new image"
         gcloud run services update db-compose-runtime-test-env \
-          --image gingersociety/db-compose-migrator:latest \
+          --image gingersociety/db-compose-runtime:latest \
           --platform managed \
           --region asia-south1 \
           --quiet  # Add --quiet to skip confirmation prompts
