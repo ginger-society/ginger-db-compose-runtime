@@ -16,4 +16,4 @@ stage = "https://iam-staging.gingersociety.org"
 
 [urls]
 dev = "http://localhost:9002"
-stage = "http://localhost:9002"
+stage = "http://localhost:3010"
