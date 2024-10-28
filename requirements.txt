@@ -1,4 +1,4 @@
-ginger-dj==6.0.3 #ginger-society
+ginger-dj==6.0.4 #ginger-society
 pyyaml==6.0.1
 uritemplate==4.1.1
 psycopg2==2.9.5
