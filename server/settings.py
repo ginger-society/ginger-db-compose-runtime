@@ -28,22 +28,22 @@ CORS_ALLOWED_ORIGINS = ["https://" + os.getenv("HOST", "localhost")]
 # Application definition
 
 INSTALLED_APPS = [
-    "ginger.contrib.admin",
-    "ginger.contrib.messages",
-    "ginger.contrib.staticfiles",
-    "ginger.rest_framework",
-    "ginger.drf_yasg",
-    "ginger.prometheus",
+    "gingerdj.contrib.admin",
+    "gingerdj.contrib.messages",
+    "gingerdj.contrib.staticfiles",
+    "gingerdj.rest_framework",
+    "gingerdj.drf_yasg",
+    "gingerdj.prometheus",
     "src",
 ]
 
 MIDDLEWARE = [
-    "ginger.middleware.security.SecurityMiddleware",
-    "ginger.contrib.sessions.middleware.SessionMiddleware",
-    "ginger.middleware.common.CommonMiddleware",
-    "ginger.middleware.csrf.CsrfViewMiddleware",
-    "ginger.contrib.messages.middleware.MessageMiddleware",
-    "ginger.middleware.clickjacking.XFrameOptionsMiddleware",
+    "gingerdj.middleware.security.SecurityMiddleware",
+    "gingerdj.contrib.sessions.middleware.SessionMiddleware",
+    "gingerdj.middleware.common.CommonMiddleware",
+    "gingerdj.middleware.csrf.CsrfViewMiddleware",
+    "gingerdj.contrib.messages.middleware.MessageMiddleware",
+    "gingerdj.middleware.clickjacking.XFrameOptionsMiddleware",
     "server.middlewares.JWTAuthMiddleware",
 ]
 
@@ -57,14 +57,14 @@ TEMPLATES_DIR = [
 
 TEMPLATES = [
     {
-        "BACKEND": "ginger.template.backends.ginger.GingerTemplates",
+        "BACKEND": "gingerdj.template.backends.gingerdj.GingerTemplates",
         "DIRS": TEMPLATES_DIR,
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
-                "ginger.template.context_processors.debug",
-                "ginger.template.context_processors.request",
-                "ginger.contrib.messages.context_processors.messages",
+                "gingerdj.template.context_processors.debug",
+                "gingerdj.template.context_processors.request",
+                "gingerdj.contrib.messages.context_processors.messages",
             ],
         },
     },
@@ -76,7 +76,7 @@ if not os.getenv("DB_NAME"):
     print("Using SQLite3")
     DATABASES = {
         "default": {
-            "ENGINE": "ginger.db.backends.sqlite3",
+            "ENGINE": "gingerdj.db.backends.sqlite3",
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
@@ -84,7 +84,7 @@ else:
     print("Using PostgreSQL")
     DATABASES = {  # pragma: no cover
         "default": {
-            "ENGINE": "ginger.db.backends.postgresql_psycopg2",
+            "ENGINE": "gingerdj.db.backends.postgresql_psycopg2",
             "NAME": os.getenv("DB_NAME", "IAM-db"),
             "USER": os.getenv("DB_USERNAME", "postgres"),
             "PASSWORD": os.getenv("DB_PASSWORD", "postgres"),
@@ -93,7 +93,7 @@ else:
         }
     }
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en"
 
 TIME_ZONE = "UTC"
 
@@ -103,7 +103,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-DEFAULT_AUTO_FIELD = "ginger.db.models.BigAutoField"
+DEFAULT_AUTO_FIELD = "gingerdj.db.models.BigAutoField"
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # BASE_DIR is your project root

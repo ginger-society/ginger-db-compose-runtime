@@ -1,6 +1,6 @@
 """tests for server"""
 
-from ginger.test import Client, TestCase
+from gingerdj.test import Client, TestCase
 
 client = Client()
 

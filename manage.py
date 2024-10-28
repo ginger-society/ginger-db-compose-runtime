@@ -9,10 +9,10 @@ def main():
     os.environ.setdefault("GINGER_SETTINGS_MODULE", "server.settings")
     try:
         # pylint: disable=C0415
-        from ginger.core.management import execute_from_command_line
+        from gingerdj.core.management import execute_from_command_line
     except ImportError as exc:
         raise ImportError(
-            "Couldn't import Ginger. Are you sure it's installed and "
+            "Couldn't import gingerdj. Are you sure it's installed and "
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc

@@ -1,6 +1,6 @@
 import jwt
-from ginger.http import HttpResponseRedirect
-from ginger.conf import settings
+from gingerdj.http import HttpResponseRedirect
+from gingerdj.conf import settings
 from src.references import GINGER_SOCIETY_IAM_FRONTEND_USERS
 
 

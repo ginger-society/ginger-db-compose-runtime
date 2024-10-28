@@ -11,17 +11,17 @@ from datetime import datetime, timedelta
 from os import listdir
 from os.path import isfile, join
 
-import ginger.apps
-from ginger.db import models
-from ginger.db.models.deletion import CASCADE, SET_NULL
-from ginger.db.models.fields.related import ForeignKey, ManyToManyField
-from ginger.http import JsonResponse
-from ginger.template.loader import render_to_string
-from ginger.drf_yasg import openapi
-from ginger.drf_yasg.utils import swagger_auto_schema
-from ginger.rest_framework import serializers
-from ginger.rest_framework.decorators import api_view
-from ginger.template.defaultfilters import title
+import gingerdj.apps
+from gingerdj.db import models
+from gingerdj.db.models.deletion import CASCADE, SET_NULL
+from gingerdj.db.models.fields.related import ForeignKey, ManyToManyField
+from gingerdj.http import JsonResponse
+from gingerdj.template.loader import render_to_string
+from gingerdj.drf_yasg import openapi
+from gingerdj.drf_yasg.utils import swagger_auto_schema
+from gingerdj.rest_framework import serializers
+from gingerdj.rest_framework.decorators import api_view
+from gingerdj.template.defaultfilters import title
 
 # from rest_framework.fields import empty
 
@@ -143,7 +143,7 @@ def get_model_db_schemas(
     schema_obj = {}
     models_list = []
 
-    for model in ginger.apps.apps.get_models():
+    for model in gingerdj.apps.apps.get_models():
         if model.__name__ not in models_to_render:
             # print("continuing for ", model.__module__)
             continue
@@ -202,7 +202,7 @@ def get_model_db_schemas(
                 not isinstance(field_def, str)  # pylint: disable=R0916
                 and not isinstance(field_def, list)
                 and (
-                    field_def.__module__.startswith("ginger.db.models.query")
+                    field_def.__module__.startswith("gingerdj.db.models.query")
                     or (
                         hasattr(field_def, "field")
                         and isinstance(field_def.field, ForeignKey)
@@ -890,7 +890,7 @@ def get_diesel_model_schema(request):
     return JsonResponse(get_model_db_schemas(models_to_render, "rust-diesel"))
 
 
-def get_ginger_dj_model_schema(request):
+def get_gingerdj_model_schema(request):
     models_to_render = request.GET["models"].split(",")
     return JsonResponse(get_model_db_schemas(models_to_render, "py-DjangoORM"))
 
@@ -914,7 +914,7 @@ class ModelsReponseSerializer(serializers.Serializer):
 def get_all_defined_models(request):
     """Gets all defined tables in the DB"""
     to_return = []
-    for model in ginger.apps.apps.get_models():
+    for model in gingerdj.apps.apps.get_models():
         app_name = model.__module__.replace(".models", "")
 
         to_return.append(
@@ -970,7 +970,7 @@ def render_models(request):
     if lang == "Rust" and framework == "Diesel":
         return rust_diesel_models(models_to_render)
     if lang == "Python" and framework == "DjangoORM":
-        return ginger_dj_models(models_to_render)
+        return gingerdj_models(models_to_render)
 
     return JsonResponse({"message": lang + " is not supported as of now"}, status=400)
 
@@ -1057,7 +1057,7 @@ def rust_diesel_models(models_to_render):
     return JsonResponse(rendered_files, safe=False)
 
 
-def ginger_dj_models(models_to_render):
+def gingerdj_models(models_to_render):
     schemas = get_model_db_schemas(models_to_render, "py-DjangoORM")
     # print(schemas)
     rendered_files = []

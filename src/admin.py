@@ -1,4 +1,4 @@
-from ginger.contrib import admin
+from gingerdj.contrib import admin
 
 from .models import *
 
@@ -6,8 +6,11 @@ from .models import *
 def create_model_admin(model):
     class ModelAdmin(admin.ModelAdmin):
         list_display = [field.name for field in model._meta.fields]
-        search_fields = [field.name for field in model._meta.fields if isinstance(
-            field, models.CharField)]
+        search_fields = [
+            field.name
+            for field in model._meta.fields
+            if isinstance(field, models.CharField)
+        ]
         list_filter = [field.name for field in model._meta.fields]
 
     return ModelAdmin

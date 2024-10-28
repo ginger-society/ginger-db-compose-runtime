@@ -1,9 +1,9 @@
 from IAMService_client.IAMService.api_client import ApiClient
 from IAMService_client.IAMService.config_utils import get_configuration
-from ginger.http import HttpResponseRedirect
-from ginger.shortcuts import redirect
-from ginger.http import HttpResponse, JsonResponse
-from ginger.shortcuts import redirect
+from gingerdj.http import HttpResponseRedirect
+from gingerdj.shortcuts import redirect
+from gingerdj.http import HttpResponse, JsonResponse
+from gingerdj.shortcuts import redirect
 
 
 from IAMService_client.IAMService import (

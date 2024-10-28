@@ -11,15 +11,15 @@ Class-based views
     1. Add an import:  from other_app.views import Home
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
 Including another URLconf
-    1. Import the include() function: from ginger.urls import include, path
+    1. Import the include() function: from gingerdj.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from ginger.contrib import admin
-from ginger.urls import include, path
+from gingerdj.contrib import admin
+from gingerdj.urls import include, path
 from src.views import *
-from ginger.drf_yasg.views import get_schema_view
-from ginger.conf import settings
+from gingerdj.drf_yasg.views import get_schema_view
+from gingerdj.conf import settings
 from server.views import clear_session, get_additional_info, handle_auth, refresh_token
 
 
@@ -48,7 +48,7 @@ urlpatterns = [
     path("models/", get_model_schema),
     path("py-sqlalchemy-models/", get_sqlalchemy_model_schema),
     path("rust-diesel-models/", get_diesel_model_schema),
-    path("py-ginger-dj-models/", get_ginger_dj_model_schema),
+    path("py-ginger-dj-models/", get_gingerdj_model_schema),
     path("render_models", render_models),
     path("get-all-models", get_all_defined_models),
     path(
@@ -61,7 +61,7 @@ urlpatterns = [
         refresh_token,
         name="refresh_token",
     ),
-    path("", include("ginger.prometheus.urls")),
+    path("", include("gingerdj.prometheus.urls")),
     path("clear-session/", clear_session, name="logout"),
     path("additional-details", get_additional_info),
 ]
