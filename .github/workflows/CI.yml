@@ -13,33 +13,57 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+    - name: Report failure if checkout fails
+      if: failure()
+      run: ginger-connector update-pipeline stage failed
 
     - name: Install ginger-apps
       run: bash -c "$(curl -fsSL https://raw.githubusercontent.com/ginger-society/infra-as-code-repo/main/rust-helpers/install-pipeline-clis.sh)"
+    - name: Report failure if ginger-apps installation fails
+      if: failure()
+      run: ginger-connector update-pipeline stage failed
 
     - name: Authenticate with ginger-auth
       id: ginger-auth
       run: ginger-auth token-login ${{ secrets.GINGER_TOKEN }}
+    - name: Report failure if authentication fails
+      if: failure()
+      run: ginger-connector update-pipeline stage failed
 
     - name: Update status to running
       run: ginger-connector update-pipeline stage running
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+    - name: Report failure if Docker Hub login fails
+      if: failure()
+      run: ginger-connector update-pipeline stage failed
 
     - name: Build Docker image for runtime
       run: |
         docker buildx build -t ${{ secrets.DOCKER_HUB_USERNAME }}/db-compose-runtime:latest . --build-arg GINGER_TOKEN=${{ secrets.GINGER_TOKEN }}
+    - name: Report failure if runtime Docker build fails
+      if: failure()
+      run: ginger-connector update-pipeline stage failed
 
     - name: Push Docker image for runtime
       run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/db-compose-runtime:latest
+    - name: Report failure if runtime Docker push fails
+      if: failure()
+      run: ginger-connector update-pipeline stage failed
 
     - name: Build Docker image for migrator
       run: |
         docker buildx build -t ${{ secrets.DOCKER_HUB_USERNAME }}/db-compose-migrator:latest -f Dockerfile.migrator . --build-arg GINGER_TOKEN=${{ secrets.GINGER_TOKEN }}
+    - name: Report failure if migrator Docker build fails
+      if: failure()
+      run: ginger-connector update-pipeline stage failed
 
     - name: Push Docker image for migrator
       run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/db-compose-migrator:latest
+    - name: Report failure if migrator Docker push fails
+      if: failure()
+      run: ginger-connector update-pipeline stage failed
 
     # Step to authenticate with GCP
     - name: Authenticate with GCP
@@ -47,6 +71,9 @@ jobs:
       with:
         project_id: ${{ secrets.GCP_PROJECT_ID }}  # Your GCP Project ID
         version: 'latest'  # Specify the version to use
+    - name: Report failure if GCP authentication fails
+      if: failure()
+      run: ginger-connector update-pipeline stage failed
 
     - name: Set up Google Cloud Application Credentials
       run: echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | base64 --decode > ${{ github.workspace }}/gcloud-key.json
@@ -54,6 +81,9 @@ jobs:
     - name: Authenticate with Google Cloud
       run: |
         gcloud auth activate-service-account --key-file=${{ github.workspace }}/gcloud-key.json
+    - name: Report failure if Google Cloud authentication fails
+      if: failure()
+      run: ginger-connector update-pipeline stage failed
 
     - name: Update Cloud Run Image - db-compose-runtime-test-env
       run: |
@@ -63,12 +93,17 @@ jobs:
           --platform managed \
           --region asia-south1 \
           --quiet  # Add --quiet to skip confirmation prompts
+    - name: Report failure if Cloud Run update fails
+      if: failure()
+      run: ginger-connector update-pipeline stage failed
 
     - name: Publish stage using ginger-connector
       run: ginger-connector publish stage
 
     - name: Update status to passing
+      if: success()
       run: ginger-connector update-pipeline stage passing
 
     - name: Trigger dependent pipelines
+      if: success()
       run: ginger-connector trigger-dependent-pipelines ${{ secrets.GH_TOKEN }}
