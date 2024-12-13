@@ -68,3 +68,8 @@ def get_additional_info(request):
 
     # Return the email in the JSON response
     return JsonResponse({"email": email}, status=200)
+
+
+def index(request):
+    """Redirects the root URL to /admin/src."""
+    return HttpResponseRedirect("/admin/src")

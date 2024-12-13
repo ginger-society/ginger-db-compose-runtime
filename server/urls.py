@@ -20,7 +20,13 @@ from gingerdj.urls import include, path
 from src.views import *
 from gingerdj.drf_yasg.views import get_schema_view
 from gingerdj.conf import settings
-from server.views import clear_session, get_additional_info, handle_auth, refresh_token
+from server.views import (
+    clear_session,
+    get_additional_info,
+    handle_auth,
+    refresh_token,
+    index,
+)
 
 
 schema_view = get_schema_view(
@@ -61,6 +67,7 @@ urlpatterns = [
         refresh_token,
         name="refresh_token",
     ),
+    path("", index, name="root"),
     path("", include("gingerdj.prometheus.urls")),
     path("clear-session/", clear_session, name="logout"),
     path("additional-details", get_additional_info),
