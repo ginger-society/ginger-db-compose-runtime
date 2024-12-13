@@ -3,7 +3,7 @@
 from pathlib import Path
 import os
 
-VERSION = "0.10.0-nightly.0"
+VERSION = "0.11.0-nightly.0"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
