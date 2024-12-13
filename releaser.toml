@@ -16,4 +16,4 @@ output_type = "String"
 variable = "version"
 
 [settings]
-git_url_prefix = "https://github.com/ginger-society/db-compose-runtime"
+git_url_prefix = "https://github.com/ginger-society/ginger-db-compose-runtime"

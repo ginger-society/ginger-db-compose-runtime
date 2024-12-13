@@ -4,6 +4,8 @@ from gingerdj.http import HttpResponseRedirect
 from gingerdj.shortcuts import redirect
 from gingerdj.http import HttpResponse, JsonResponse
 from gingerdj.shortcuts import redirect
+from src.references import GINGER_SOCIETY_IAM_FRONTEND_USERS
+from gingerdj.conf import settings
 
 
 from IAMService_client.IAMService import (
@@ -50,13 +52,18 @@ def refresh_token(request):
 
 
 def clear_session(request):
-    # Clear all cookies
-    http_response = HttpResponse(status=200)  # Basic OK response
+    # Define the redirect URL
+    redirect_url = (
+        GINGER_SOCIETY_IAM_FRONTEND_USERS + "/#" + settings.APP_ID + "/logout"
+    )
 
-    # Update the 'access_token' cookie with the new token
-    http_response.set_cookie("access_token", "")
-    # Update the 'access_token' cookie with the new token
-    http_response.set_cookie("refresh_token", "")
+    # Create a redirect response
+    http_response = HttpResponseRedirect(redirect_url)
+
+    # Clear cookies for the current domain and path
+    http_response.set_cookie("access_token", "", max_age=0, path="/")
+    http_response.set_cookie("refresh_token", "", max_age=0, path="/")
+
     return http_response
 
 

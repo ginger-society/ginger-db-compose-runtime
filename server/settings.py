@@ -85,7 +85,7 @@ else:
     DATABASES = {  # pragma: no cover
         "default": {
             "ENGINE": "gingerdj.db.backends.postgresql_psycopg2",
-            "NAME": os.getenv("DB_NAME", "IAM-db"),
+            "NAME": os.getenv("DB_NAME", "db"),
             "USER": os.getenv("DB_USERNAME", "postgres"),
             "PASSWORD": os.getenv("DB_PASSWORD", "postgres"),
             "HOST": os.getenv("DB_HOST", "127.0.0.1"),
