@@ -68,7 +68,7 @@ function updateHeader() {
     logoutButton.classList.add("logout-button");
     logoutButton.onclick = async function () {
       await fetch("/clear-session");
-      window.location.href = "/"; // Redirect to logout
+      window.location.href = "/?logout"; // Redirect to logout
     };
 
     breadcrumbs.appendChild(logoutButton);

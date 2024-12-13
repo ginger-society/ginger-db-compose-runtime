@@ -9,9 +9,15 @@ class JWTAuthMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        redirect_url = (
-            GINGER_SOCIETY_IAM_FRONTEND_USERS + "/#" + settings.APP_ID + "/login"
-        )
+
+        if "logout" in request.GET:
+            redirect_url = (
+                GINGER_SOCIETY_IAM_FRONTEND_USERS + "/#" + settings.APP_ID + "/logout"
+            )
+        else:
+            redirect_url = (
+                GINGER_SOCIETY_IAM_FRONTEND_USERS + "/#" + settings.APP_ID + "/login"
+            )
 
         # Retrieve tokens from headers or cookies
         access_token = request.COOKIES.get(
