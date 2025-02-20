@@ -26,6 +26,11 @@ ENV GINGER_ENV=$GINGER_ENV
 
 RUN ginger-auth token-login $GINGER_TOKEN
 
+# this env is for the ginger-dj env , it enables DEBUG=True/False
+ENV env prod 
+WORKDIR /app
+COPY . /app
+
 # Switch environment based on build argument
 RUN if [ "$GINGER_ENV" = "prod" ]; then \
       ginger-connector refer prod && \
@@ -34,10 +39,6 @@ RUN if [ "$GINGER_ENV" = "prod" ]; then \
       ginger-connector refer stage && \
       ginger-connector connect stage; \
     fi
-
-ENV env prod
-WORKDIR /app
-COPY . /app
 
 EXPOSE 80
 RUN pip install -r requirements.txt
