@@ -46,15 +46,24 @@ jobs:
       if: failure()
       run: ginger-connector update-pipeline stage failed
 
-    - name: Build Docker image for runtime
+    # 🚀 Build and push stage image
+    - name: Build Docker image for runtime (stage)
       run: |
-        docker buildx build -t ${{ secrets.DOCKER_HUB_USERNAME }}/db-compose-runtime:latest . --build-arg GINGER_TOKEN=${{ secrets.GINGER_TOKEN }}
-    - name: Report failure if runtime Docker build fails
-      if: failure()
-      run: ginger-connector update-pipeline stage failed
-
-    - name: Push Docker image for runtime
+        docker buildx build -t ${{ secrets.DOCKER_HUB_USERNAME }}/db-compose-runtime:latest . \
+          --build-arg GINGER_TOKEN=${{ secrets.GINGER_TOKEN }} \
+          --build-arg GINGER_ENV=stage
+    - name: Push Docker image for runtime (stage)
       run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/db-compose-runtime:latest
+
+    # 🚀 Build and push prod image
+    - name: Build Docker image for runtime (prod)
+      run: |
+        docker buildx build -t ${{ secrets.DOCKER_HUB_USERNAME }}/db-compose-runtime-prod:latest . \
+          --build-arg GINGER_TOKEN=${{ secrets.GINGER_TOKEN }} \
+          --build-arg GINGER_ENV=prod
+    - name: Push Docker image for runtime (prod)
+      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/db-compose-runtime-prod:latest
+
     - name: Report failure if runtime Docker push fails
       if: failure()
       run: ginger-connector update-pipeline stage failed
