@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  generateName: build-image-and-push-to-container-registry-run-8
+  namespace: tasks-ginger-db-compose-runtime
+spec:
+  serviceAccountName: tekton-registry-access
+  taskRef:
+    name: build-image-and-push-to-container-registry
+  workspaces:
+    - name: source
+      emptyDir: {}  # Temporary in-memory storage
+    - name: ssh-credentials
+      secret:
+        secretName: ssh-private-key  # Reference to your SSH private key secret
+    - name: ssh-config
+      emptyDir: {}  # Shared space for SSH setup
+    - name: buildah-cache
+      persistentVolumeClaim:
+        claimName: buildah-cache
+    - name: general-purpose-cache
+      persistentVolumeClaim:
+        claimName: general-purpose-cache
+    - name: kubeconfig  # Mount kubeconfig from existing PVC
+      persistentVolumeClaim:
+        claimName: tasks-ginger-db-compose-runtime-pvc
+      subPath: kubeconfigs  # Use the 'kubeconfigs' sub-directory
+    - name: pipeline-secrets
+      secret:
+        secretName: pipeline-secrets-secret
