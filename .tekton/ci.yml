@@ -78,7 +78,7 @@ spec:
         cp -r /workspace/kubeconfig /keys
         export KUBECONFIG=/workspace/kubeconfig/kubeconfig.gingersociety.prod.yml
         echo "Rolling out restart"
-        kubectl rollout restart deployment ginger-db-compose-runtime-deploy \
+        kubectl rollout restart deployment ginger-db-test-env \
           -n default
         
       
