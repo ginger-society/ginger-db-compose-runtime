@@ -27,6 +27,6 @@ stage = ""
 [urls]
 dev = "http://localhost:3013"
 stage = "https://db-compose-runtime-test-env-675766508318.asia-south1.run.app"
-prod = "https://iam-db.gingersociety.org"
+prod = "https://db-compose-test-env.gingersociety.org/"
 
 [urls_ws]

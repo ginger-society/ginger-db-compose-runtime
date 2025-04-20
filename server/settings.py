@@ -15,7 +15,10 @@ SECRET_KEY = "ginger-insecure-u0j2maaxfoo8t1_l(l*asol9gw@(we8j=_lkn9m$dla55^(74@
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET", "1234")
 
+DEV_DEFAULT_ID = "db-compose-test-env"
+
 APP_ID = os.getenv("APP_ID", "db-compose-test-env")
+ADDITIONAL_TEMPLATES_FOLDER = os.getenv("ADDITIONAL_TEMPLATES_FOLDER")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,8 +47,10 @@ MIDDLEWARE = [
     "gingerdj.middleware.csrf.CsrfViewMiddleware",
     "gingerdj.contrib.messages.middleware.MessageMiddleware",
     "gingerdj.middleware.clickjacking.XFrameOptionsMiddleware",
-    "server.middlewares.JWTAuthMiddleware",
 ]
+
+if APP_ID != DEV_DEFAULT_ID:
+    MIDDLEWARE.append("server.middlewares.JWTAuthMiddleware")
 
 ROOT_URLCONF = "server.urls"
 
@@ -54,6 +59,9 @@ TEMPLATES_DIR = [
     os.path.join(BASE_DIR, "src", "orm_templates"),
     os.path.join(BASE_DIR, "src", "templates"),
 ]
+# Only add ADDITIONAL_TEMPLATES_FOLDER if it's set
+if ADDITIONAL_TEMPLATES_FOLDER:
+    TEMPLATES_DIR.append(os.path.join(BASE_DIR, "src", ADDITIONAL_TEMPLATES_FOLDER))
 
 TEMPLATES = [
     {

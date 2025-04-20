@@ -40,6 +40,7 @@ ORM_TYPE_MAPPER = {
         "AutoField": "number",
         "TextField": "string",
         "PositiveSmallIntegerField": "number",
+        "FloatField": "number",
     },
     "py-sqlalchemy": {
         "CharField": "String",
@@ -54,6 +55,7 @@ ORM_TYPE_MAPPER = {
         "AutoField": "Integer",
         "TextField": "String",
         "PositiveSmallIntegerField": "Integer",
+        "FloatField": "Float",
     },
     "rust-diesel": {
         "CharField": "Varchar",
@@ -64,6 +66,7 @@ ORM_TYPE_MAPPER = {
         "DateTimeField": "Timestamptz",
         "PositiveIntegerField": "Integer",
         "ForeignKey": "BigInt",
+        "FloatField": "Double",
         "ManyToManyField": "BigInt",
         "AutoField": "BigInt",
         "TextField": "Varchar",
@@ -82,6 +85,7 @@ ORM_TYPE_MAPPER = {
         "AutoField": "AutoField",
         "TextField": "TextField",
         "PositiveSmallIntegerField": "PositiveSmallIntegerField",
+        "FloatField": "FloatField",
     },
 }
 
@@ -99,6 +103,7 @@ LANG_TYPE_MAPPER = {
         "AutoField": "int",
         "TextField": "str",
         "PositiveSmallIntegerField": "int",
+        "FloatField": "float",
     },
     "rust-diesel": {
         "CharField": "String",
@@ -113,6 +118,7 @@ LANG_TYPE_MAPPER = {
         "AutoField": "i64",
         "TextField": "String",
         "PositiveSmallIntegerField": "i64",
+        "FloatField": "f64",
     },
 }
 

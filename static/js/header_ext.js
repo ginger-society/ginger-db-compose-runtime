@@ -100,27 +100,29 @@ function updateHeader() {
 // Function to fetch email from /additional-info and add Welcome message
 function addWelcomeMessage() {
   const breadcrumbs = document.querySelector(".breadcrumbs");
+  let welcomeMessage = breadcrumbs.querySelector(".welcome-message");
+  const logoutButton = breadcrumbs.querySelector(".logout-button");
 
   // Fetch the email from the server
   fetch("/additional-details")
     .then((response) => response.json())
     .then((data) => {
-      const userEmail = data.email || "Unknown User"; // Default value if email is not available
+      const userEmail = data.email || null; // Default value if email is not available
 
       // Create and add Welcome message with user email
-      let welcomeMessage = breadcrumbs.querySelector(".welcome-message");
+      
       if (!welcomeMessage) {
         welcomeMessage = document.createElement("span");
         welcomeMessage.classList.add("welcome-message");
         welcomeMessage.innerText = `Welcome, ${userEmail}`;
         welcomeMessage.style.marginRight = "10px";
 
-        // Insert the Welcome message before the Logout button
-        const logoutButton = breadcrumbs.querySelector(".logout-button");
+        
         breadcrumbs.insertBefore(welcomeMessage, logoutButton);
       }
     })
     .catch((error) => {
+      logoutButton.style.display = "none"; // Hide Logout button
       console.error("Error fetching additional info:", error);
     });
 }

@@ -61,13 +61,16 @@ def clear_session(request):
 
 def get_additional_info(request):
     # Access the decoded JWT claims from the request
-    decoded_jwt = request.decoded_jwt
+    if 'decoded_jwt' in request:
+        decoded_jwt = request.decoded_jwt
 
-    # Extract the "sub" claim (usually used as the user's email or unique ID)
-    email = decoded_jwt.get("sub", "Unknown")
+        # Extract the "sub" claim (usually used as the user's email or unique ID)
+        email = decoded_jwt.get("sub", "Unknown")
 
-    # Return the email in the JSON response
-    return JsonResponse({"email": email}, status=200)
+        # Return the email in the JSON response
+        return JsonResponse({"email": email}, status=200)
+    else:
+        return JsonResponse({} , status=404)
 
 
 def index(request):
