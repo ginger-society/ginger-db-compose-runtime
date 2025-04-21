@@ -17,6 +17,8 @@ RUN npm install @openapitools/openapi-generator-cli -g
 # Install Ginger Society CLI tools
 RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ginger-society/infra-as-code-repo/main/rust-helpers/install-pipeline-clis.sh)"
 
+RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ginger-society/infra-as-code-repo/main/rust-helpers/installer.sh)" -- ginger-society/ginger-db:latest
+
 ARG GINGER_TOKEN
 ENV GINGER_TOKEN=$GINGER_TOKEN
 
