@@ -17,17 +17,6 @@ spec:
       - name: pipeline-secrets
       - name: general-purpose-cache
   steps:
-    - name: clone
-      image: containers.gingersociety.org/secure-git-task-runner:latest
-      script: |
-        #!/bin/sh
-        set -e  # Exit on error
-
-        /usr/local/bin/configurator.sh
-        
-        git config --global init.defaultBranch main
-        git clone git@source.gingersociety.org:ginger-db-compose-runtime.git /workspace/source/repo
-        echo "Repository cloned successfully."
 
     - name: dry-run
       image: containers.gingersociety.org/gingersociety/ginger-db-compose-runtime:prod
@@ -35,7 +24,7 @@ spec:
         #!/bin/sh
         set -e  # Exit on error
 
-        cd /workspace/source/repo
+        cd /app
 
         python manage.py makemigrations --verbosity 3
 
