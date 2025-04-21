@@ -5,7 +5,7 @@ metadata:
   namespace: tasks-ginger-db-compose-runtime
   annotations:
     x-ginger-task-namespace: "ginger-db-compose-runtime"  # Custom annotation
-    x-ginger-task-trigger-branch: '["refs/heads/main"]'  # Allowed branches
+    x-ginger-task-trigger-branch: '["refs/heads/master"]'  # Allowed branches
 
 spec:
   workspaces:
