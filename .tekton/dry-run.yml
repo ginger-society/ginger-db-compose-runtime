@@ -37,8 +37,8 @@ spec:
 
         cd /workspace/source/repo
 
-        python manage.py --dry-run --verbosity 3
-        
+        python manage.py --verbosity 3
+
       securityContext:
         privileged: true
 
