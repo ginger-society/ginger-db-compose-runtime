@@ -1,0 +1,47 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: dry-run
+  namespace: tasks-ginger-db-compose-runtime
+  annotations:
+    x-ginger-task-namespace: "ginger-db-compose-runtime"  # Custom annotation
+    x-ginger-task-trigger-branch: '["refs/heads/main"]'  # Allowed branches
+
+spec:
+  workspaces:
+      - name: source
+      - name: ssh-credentials  # Store SSH keys
+      - name: ssh-config  # Store SSH setup
+      - name: kubeconfig
+      - name: buildah-cache  # Workspace for caching
+      - name: pipeline-secrets
+      - name: general-purpose-cache
+  steps:
+    - name: clone
+      image: containers.gingersociety.org/secure-git-task-runner:latest
+      script: |
+        #!/bin/sh
+        set -e  # Exit on error
+
+        /usr/local/bin/configurator.sh
+        
+        git config --global init.defaultBranch main
+        git clone git@source.gingersociety.org:ginger-db-compose-runtime.git /workspace/source/repo
+        echo "Repository cloned successfully."
+
+    - name: dry-run
+      image: containers.gingersociety.org/gingersociety/ginger-db-compose-runtime:prod
+      script: |
+        #!/bin/sh
+        set -e  # Exit on error
+
+        cd /workspace/source/repo
+
+        ./dry-run-makemigrate.sh
+      securityContext:
+        privileged: true
+
+        
+      
+
+
