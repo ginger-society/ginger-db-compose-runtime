@@ -37,7 +37,8 @@ spec:
 
         cd /workspace/source/repo
 
-        ./dry-run-makemigrate.sh
+        python manage.py --dry-run --verbosity 3
+        
       securityContext:
         privileged: true
 

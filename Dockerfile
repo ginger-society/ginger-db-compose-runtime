@@ -44,5 +44,4 @@ EXPOSE 80
 RUN pip install -r requirements.txt
 RUN chmod +x run.sh
 RUN chmod +x migrate.sh
-RUN chmod +x dry-run-makemigrate.sh
 
