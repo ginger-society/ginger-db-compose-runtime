@@ -5,60 +5,98 @@ metadata:
   namespace: tasks-ginger-db-compose-runtime
 spec:
   workspaces:
-      - name: source
-      - name: ssh-credentials  # Store SSH keys
-      - name: ssh-config  # Store SSH setup
-      - name: pipeline-secrets
-      - name: general-purpose-cache
-      - name: src
-  steps:
+    - name: source
+    - name: ssh-credentials
+    - name: ssh-config
+    - name: pipeline-secrets
+    - name: general-purpose-cache
+    - name: src
 
+  steps:
     - name: clone
       image: containers.gingersociety.org/secure-git-task-runner:latest
       script: |
         #!/bin/sh
-        set -e  # Exit on error
+        set -e
+
+        echo "Commit message:"
+        cat /workspace/src/commit_message
+        echo "Commit flag:"
+        cat /workspace/src/commit
+        echo "Repo Name:"
+        cat /workspace/src/repo_name
+        echo "DB Name:"
+        cat /workspace/src/db_name
+
+        REPO_NAME=$(cat /workspace/src/repo_name)
 
         /usr/local/bin/configurator.sh
-        
-        git config --global init.defaultBranch main
-        git clone git@source.gingersociety.org:academy-database.git /workspace/source/repo
-        echo "Repository cloned successfully."
 
+        git config --global init.defaultBranch main
+        git clone git@source.gingersociety.org:${REPO_NAME}.git /workspace/source/repo
+
+        echo "Repository cloned successfully."
 
     - name: dry-run
       image: containers.gingersociety.org/gingersociety/ginger-db-compose-runtime:prod
       script: |
         #!/bin/sh
-        set -e  # Exit on error
-        # cp /workspace/src/models.py /app/src/
-        rm -r /app/src/migrations
-        rm /app/src/admin.py
-        cp -r /workspace/source/repo/academy-iam/migrations /app/src/
+        set -e
+
+        DB_NAME=$(cat /workspace/src/db_name)
+
+        rm -rf /app/src/migrations || true
+        rm -f /app/src/admin.py || true
+
+
+        mkdir -p /workspace/source/repo/${DB_NAME}
+        mkdir -p /workspace/source/repo/${DB_NAME}/migrations
+
+        # Only copy existing migrations if they exist
+        if [ -d "/workspace/source/repo/${DB_NAME}/migrations" ]; then
+          echo "Copying existing migrations from repo..."
+          cp -r /workspace/source/repo/${DB_NAME}/migrations /app/src/
+        else
+          echo "No existing migrations to copy for ${DB_NAME}."
+        fi
 
         cd /app
 
-        ls -la src/migrations
-
-        bash -c "$(curl -fsSL https://raw.githubusercontent.com/ginger-society/infra-as-code-repo/main/rust-helpers/installer.sh)" -- ginger-society/ginger-db:latest
-
-
-        ginger-db --help
-
+        echo "Rendering models..."
         ginger-db render-from-file --path /workspace/src/models.json --out /app/src/
 
-
+        echo "Running makemigrations..."
         python manage.py makemigrations --verbosity 3
+
+        # Copy generated migrations back to repo
+        rm -rf /workspace/source/repo/${DB_NAME}/migrations || true
+        cp -r /app/src/migrations /workspace/source/repo/${DB_NAME}/
+
 
       securityContext:
         privileged: true
 
-  volumes:
-    - name: models-config
-      configMap:
-        name: dry-run-models
+    - name: commit-and-push
+      image: containers.gingersociety.org/secure-git-task-runner:latest
+      script: |
+        #!/bin/sh
+        set -e
 
-        
-      
+        COMMIT_FLAG=$(cat /workspace/src/commit)
+        DB_NAME=$(cat /workspace/src/db_name)
 
+        if [ "$COMMIT_FLAG" = "true" ]; then
+          /usr/local/bin/configurator.sh
 
+          cd /workspace/source/repo
+          git config --global user.name "GingerBot"
+          git config --global user.email "bot@gingersociety.org"
+
+          git add ${DB_NAME}/migrations/
+          COMMIT_MESSAGE=$(cat /workspace/src/commit_message)
+          git commit -m "$COMMIT_MESSAGE" || echo "No changes to commit."
+          git push origin main
+          echo "Changes pushed successfully."
+        else
+          echo "Skipping commit and push because commit flag is not true."
+        fi
