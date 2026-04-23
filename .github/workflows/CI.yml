@@ -72,7 +72,7 @@ jobs:
     # 🚀 WAIT UNTIL SERVER IS READY
     - name: Wait for server to be ready
       run: |
-        echo "Waiting for Django server..."
+        echo "Waiting for GingerDJ server..."
 
         for i in {1..30}; do
           if curl -s http://localhost:8000/ > /dev/null; then
