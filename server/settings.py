@@ -91,8 +91,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "server.wsgi.application"
 
-print(os.getenv("DB_NAME"))
-
 if not os.getenv("DB_NAME"):
     DATABASES = {
         "default": {
