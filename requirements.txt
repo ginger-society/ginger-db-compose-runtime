@@ -8,7 +8,7 @@ pytz==2024.1
 inflection==0.5.1
 packaging
 setuptools
-pydantic
+pydantic==2.11.2
 certifi
 python-dateutil
 urllib3
