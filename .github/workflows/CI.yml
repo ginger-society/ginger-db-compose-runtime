@@ -61,9 +61,40 @@ jobs:
       if: failure()
       run: ginger-connector update-pipeline stage failed
 
-    # TODO: update a running instance and publish
-    # - name: Publish stage using ginger-connector
-    #   run: ginger-connector publish stage
+    # 🚀 START SERVER IN BACKGROUND
+    - name: Start container (server)
+      run: |
+        docker run -d --name app \
+          -p 8000:8000 \
+          ${{ secrets.DOCKER_HUB_USERNAME }}/db-compose-runtime:latest \
+          bash /app/run.sh
+
+    # 🚀 WAIT UNTIL SERVER IS READY
+    - name: Wait for server to be ready
+      run: |
+        echo "Waiting for Django server..."
+
+        for i in {1..30}; do
+          if curl -s http://localhost:8000/ > /dev/null; then
+            echo "Server is up!"
+            exit 0
+          fi
+          sleep 2
+        done
+
+        echo "Server failed to start"
+        docker logs app
+        exit 1
+
+    # 🚀 PUBLISH ONCE SERVER IS READY
+    - name: Publish stage
+      run: ginger-connector publish stage
+
+    # Optional cleanup
+    - name: Stop container
+      run: |
+        docker stop app
+        docker rm app
 
     - name: Update status to passing
       if: success()
