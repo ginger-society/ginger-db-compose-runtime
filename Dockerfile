@@ -44,6 +44,7 @@ RUN if [ "$GINGER_ENV" = "prod" ]; then \
 
 EXPOSE 80
 RUN pip install -r requirements.txt
+RUN python manage.py collectstatic --noinput
 RUN chmod +x run.sh
 RUN chmod +x migrate.sh
 

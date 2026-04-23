@@ -9,6 +9,7 @@ PSQL_HOST=${DB_HOST:-"db"}
 PSQL_PORT=${DB_PORT:-"5432"}
 
 export PGPASSWORD=$PSQL_PASSWORD
+export DJANGO_SETTINGS_MODULE=server.settings
 
 if ! psql -U $PSQL_USER -h $PSQL_HOST -p $PSQL_PORT -lqt | cut -d \| -f 1 | grep -qw $DB_NAME; then
     createdb -U $PSQL_USER -h $PSQL_HOST -p $PSQL_PORT $DB_NAME

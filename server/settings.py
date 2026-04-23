@@ -21,7 +21,7 @@ APP_ID = os.getenv("APP_ID", "db-compose-test-env")
 ADDITIONAL_TEMPLATES_FOLDER = os.getenv("ADDITIONAL_TEMPLATES_FOLDER")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [os.getenv("HOST", "localhost"), "127.0.0.1"]
 
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "gingerdj.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "gingerdj.contrib.sessions.middleware.SessionMiddleware",
     "gingerdj.middleware.common.CommonMiddleware",
     "gingerdj.middleware.csrf.CsrfViewMiddleware",
@@ -51,6 +52,16 @@ MIDDLEWARE = [
 
 if APP_ID != DEV_DEFAULT_ID:
     MIDDLEWARE.append("server.middlewares.JWTAuthMiddleware")
+
+
+STATICFILES_STORAGE = "gingerdj.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "gingerdj.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+    }
+}
 
 ROOT_URLCONF = "server.urls"
 
@@ -81,7 +92,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "server.wsgi.application"
 
 if not os.getenv("DB_NAME"):
-    print("Using SQLite3")
     DATABASES = {
         "default": {
             "ENGINE": "gingerdj.db.backends.sqlite3",
@@ -89,7 +99,6 @@ if not os.getenv("DB_NAME"):
         }
     }
 else:
-    print("Using PostgreSQL")
     DATABASES = {  # pragma: no cover
         "default": {
             "ENGINE": "gingerdj.db.backends.postgresql_psycopg2",
@@ -112,6 +121,8 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "gingerdj.db.models.BigAutoField"
+
+STATIC_ROOT = BASE_DIR / "static-dist"
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # BASE_DIR is your project root
