@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "gingerdj.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "gingerdj.whitenoise.middleware.WhiteNoiseMiddleware",
     "gingerdj.contrib.sessions.middleware.SessionMiddleware",
     "gingerdj.middleware.common.CommonMiddleware",
     "gingerdj.middleware.csrf.CsrfViewMiddleware",
